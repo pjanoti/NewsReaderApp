@@ -32,9 +32,9 @@ class BookmarkViewModel: ObservableObject {
         let newBookmark = BookmarkedArticle(context: viewContext)
         newBookmark.id = article.id
         newBookmark.author = article.author
-        newBookmark.title = article.title
+        newBookmark.title = article.title?.stripOutHtml()
         newBookmark.url = article.url
-        newBookmark.content = article.content
+        newBookmark.content = article.content?.stripOutHtml()
 
         do {
             try viewContext.save()

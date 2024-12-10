@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		0DE186C52D02B62700FB3BD2 /* NewsReaderAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE186BC2D02B62700FB3BD2 /* NewsReaderAppApp.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		0DE186832D01BE1900FB3BD2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -31,7 +27,6 @@
 		0DE186722D01BE1900FB3BD2 /* NewsReaderApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsReaderApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DE186822D01BE1900FB3BD2 /* NewsReaderAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsReaderAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DE1868C2D01BE1900FB3BD2 /* NewsReaderAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsReaderAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0DE186BC2D02B62700FB3BD2 /* NewsReaderAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsReaderAppApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -81,7 +76,6 @@
 			isa = PBXGroup;
 			children = (
 				0DE186742D01BE1900FB3BD2 /* NewsReaderApp */,
-				0DE186BC2D02B62700FB3BD2 /* NewsReaderAppApp.swift */,
 				0DE186852D01BE1900FB3BD2 /* NewsReaderAppTests */,
 				0DE1868F2D01BE1900FB3BD2 /* NewsReaderAppUITests */,
 				0DE186732D01BE1900FB3BD2 /* Products */,
@@ -242,7 +236,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DE186C52D02B62700FB3BD2 /* NewsReaderAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

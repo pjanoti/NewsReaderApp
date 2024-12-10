@@ -66,7 +66,7 @@ struct Article: Codable, Identifiable {
     init(bookmarkedArticle: BookmarkedArticle) {
         self.id = bookmarkedArticle.id ?? UUID().uuidString
         self.author = bookmarkedArticle.author
-        self.title = bookmarkedArticle.content
+        self.title = bookmarkedArticle.title
         self.content = bookmarkedArticle.content
         self.url = bookmarkedArticle.url
         self.publishedAt = Date()
