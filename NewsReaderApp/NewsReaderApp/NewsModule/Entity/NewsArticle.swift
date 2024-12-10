@@ -14,7 +14,7 @@ struct NewsResponse: Codable {
 }
 
 struct Article: Codable, Identifiable {
-    var id = UUID() // To make each article identifiable
+    var id: String // To make each article identifiable
     let author: String?
     let title: String?
     let description: String?
@@ -44,6 +44,8 @@ struct Article: Codable, Identifiable {
         self.author = try container.decodeIfPresent(String.self, forKey: .author)
         self.url = try container.decodeIfPresent(String.self, forKey: .url)
         self.urlToImage = try container.decodeIfPresent(String.self, forKey: .urlToImage)
+        // Use the URL as a unique identifier for each article
+        self.id = self.url ?? UUID().uuidString
         
         // Custom decoding for 'publishedAt'
         if let publishedAtString = try container.decodeIfPresent(String.self, forKey: .publishedAt) {
@@ -59,6 +61,25 @@ struct Article: Codable, Identifiable {
         } else {
             self.publishedAt = nil
         }
+    }
+    
+    init(bookmarkedArticle: BookmarkedArticle) {
+        self.id = bookmarkedArticle.id ?? UUID().uuidString
+        self.author = bookmarkedArticle.author
+        self.title = bookmarkedArticle.content
+        self.content = bookmarkedArticle.content
+        self.url = bookmarkedArticle.url
+        self.publishedAt = Date()
+        self.urlToImage = AppConstant.emptyString
+        self.description = bookmarkedArticle.content
+    }
+    
+    static func getArticles(_ bookmarkedArticles: [BookmarkedArticle]) -> [Article] {
+        var articles = [Article]()
+        for bookmarkedArticle in bookmarkedArticles {
+            articles.append(Article(bookmarkedArticle: bookmarkedArticle))
+        }
+        return articles
     }
     
 }

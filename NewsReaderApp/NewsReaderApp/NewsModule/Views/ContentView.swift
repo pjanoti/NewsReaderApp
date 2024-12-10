@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @StateObject var viewModel = ArticleViewModel()
     @State private var isDetailViewActive = false
+    @StateObject private var bookmarkViewModel = BookmarkViewModel()
     
     var body: some View {
         TabView {
-            
             // Tab for Top Headlines
             NavigationView {
                 ArticleListView(articles: viewModel.topHeadlines, isDetailViewActive: $isDetailViewActive)
                     .onAppear {
-                        viewModel.fetchAllArticles(category: "top-headlines")
+                        if viewModel.topHeadlines.isEmpty {
+                            viewModel.fetchAllArticles(category: "top-headlines")
+                        }
                     }
                     .navigationTitle("Top Headlines")
             }
@@ -31,7 +32,9 @@ struct ContentView: View {
             NavigationView {
                 ArticleListView(articles: viewModel.allArticles, isDetailViewActive: $isDetailViewActive)
                     .onAppear {
-                        viewModel.fetchAllArticles(category: "everything")
+                        if viewModel.allArticles.isEmpty {
+                            viewModel.fetchAllArticles(category: "everything")
+                        }
                     }
                     .navigationTitle("All Articles")
             }
@@ -39,30 +42,48 @@ struct ContentView: View {
                 Label("All Articles", systemImage: "list.dash")
             }
             
+            // Tab for Bookmarked Articles
+            NavigationView {
+                ArticleListView(articles: Article.getArticles(bookmarkViewModel.bookmarkedArticles), isDetailViewActive: $isDetailViewActive)
+                    .onAppear {
+                        bookmarkViewModel.fetchBookmarks()
+                    }
+                    .navigationTitle("Bookmarked Articles")
+            }
+            .tabItem {
+                Label("Bookmarks", systemImage: "bookmark.fill")
+            }
         }
     }
 }
-    
 
 struct ArticleListView: View {
     let articles: [Article]
+    
     @Binding var isDetailViewActive: Bool
 
     var body: some View {
-        List(articles, id: \.id) { article in
-            NavigationLink(destination: ArticleDetailView(article: article, isDetailViewActive: $isDetailViewActive)) {
-                VStack(alignment: .leading) {
-                    Text(article.title ?? "")
-                        .font(.system(size: 16, weight: .semibold, design: .default))
-                        .lineLimit(4)
-                    Text(article.description ?? "")
-                        .font(.system(size: 12))
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .multilineTextAlignment(.leading)
+        if articles.isEmpty {
+            Text("No bookmarked articles")
+                .font(.system(size: 16, weight: .semibold, design: .default))
+        } else {
+            List(articles, id: \.id) { article in
+                NavigationLink(destination: ArticleDetailView(article: article, isDetailViewActive: $isDetailViewActive)) {
+                    VStack(alignment: .leading) {
+                        Text(article.title ?? "")
+                            .font(.system(size: 16, weight: .semibold, design: .default))
+                            .lineLimit(2)
+                        Text(article.description ?? "")
+                            .font(.system(size: 12))
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
+                    }
                 }
+                .buttonStyle(PlainButtonStyle())
             }
-        }.listStyle(.inset)
+            .listStyle(.inset)
+        }
     }
 }
 

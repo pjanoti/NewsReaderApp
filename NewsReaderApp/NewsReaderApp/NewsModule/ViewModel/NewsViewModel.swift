@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class ArticleViewModel: ObservableObject {
     @Published var allArticles = [Article]()
@@ -17,6 +18,9 @@ class ArticleViewModel: ObservableObject {
     private let query = "q=Apple&sortBy=popularity"
     private var cancellables = Set<AnyCancellable>()
     
+    @ObservedObject var bookmarkViewModel = BookmarkViewModel() // Observe BookmarkViewModel
+    
+    // Fetch all articles by category
     func fetchAllArticles(category: String) {
         let urlString = "\(baseUrl)\(category)?\(query)&apiKey=\(apiKey)"
         guard let url = URL(string: urlString) else {
@@ -51,4 +55,3 @@ class ArticleViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 }
-
